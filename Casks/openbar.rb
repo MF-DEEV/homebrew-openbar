@@ -28,16 +28,18 @@ cask "openbar" do
     end
   end
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "Openbar.app"
 
   # Openbar isn't notarized yet, so Gatekeeper would refuse to open it after
   # the download. The release DMG is the one GitHub serves for this tag, and
   # Homebrew checked its SHA-256 above.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/Openbar.app"]
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:           ["-dr", "com.apple.quarantine", "{{appdir}}/Openbar.app"],
+        writable_paths: ["Openbar.app"],
+        writable_base:  :appdir
   end
 
   uninstall quit: "com.openbar.app"
