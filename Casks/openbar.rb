@@ -11,10 +11,21 @@ cask "openbar" do
   desc "Dynamic Island for the notch with your AI coding agents' sessions"
   homepage "https://github.com/MF-DEEV/Openbar"
 
+  # Every Mac release so far is a GitHub pre-release, which the default
+  # strategy skips; Mac tags are v<version>, Windows and Linux tags differ.
   livecheck do
-    url :url
-    regex(/^v?(\d+(?:\.\d+)+(?:-[\w.]+)?)$/i)
-    strategy :github_releases
+    url "https://github.com/MF-DEEV/Openbar"
+    regex(/^v(\d+(?:\.\d+)+(?:-[\w.]+)?)$/i)
+    strategy :github_releases do |json, regex|
+      json.map do |release|
+        next if release["draft"]
+
+        match = release["tag_name"]&.match(regex)
+        next if match.blank?
+
+        match[1]
+      end
+    end
   end
 
   depends_on macos: ">= :sonoma"
