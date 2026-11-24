@@ -3,8 +3,8 @@
 # fills in the version and checksum and pushes it to the tap on each release.
 
 cask "openbar" do
-  version "3.5.0-beta.4"
-  sha256 "e411fc3c782fb54a46779d82946c8f05225f40f38f650c63a35fda771ce3b491"
+  version "3.5.0-beta.5"
+  sha256 "26a6e4eab4a62b1f2e5824587e52e7cb75b7d531eea7fa2681b10d5b351c56f4"
 
   url "https://github.com/MF-DEEV/Openbar/releases/download/v#{version}/Openbar-#{version}.dmg"
   name "Openbar"
